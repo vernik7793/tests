@@ -36,6 +36,8 @@ public class MergeIterator implements Iterator<Integer> {
         // TODO реализовать метод
 		Integer oneElem = null;
 		Integer twoElem = null;
+		Integer oElem = null;
+
 		if (oneElemWaited != null)
 			oneElem = oneElemWaited;
 		else if (one.hasNext())
