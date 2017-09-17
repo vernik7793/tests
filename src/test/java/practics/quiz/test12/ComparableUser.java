@@ -24,25 +24,41 @@ public class ComparableUser implements Comparable<ComparableUser>{
 	@Override
 	public String toString() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        return "User[age=" + getAge() + ", name'" + getName() + "']";
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 	
 	@Override
 	public int compareTo(ComparableUser that) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		if (age > that.getAge())
+			return 1;
+		else if (age < that.getAge())
+			return -1;
+		else
+			return 0;
+
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public int hashCode() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        return 11 * getName().hashCode() + 13 * (new Integer(getAge())).hashCode();
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public boolean equals(Object obj) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        if (obj == null)
+        	return false;
+        if (this == obj)
+        	return true;
+        if (getClass() != obj.getClass())
+        	return false;
+		ComparableUser other = (ComparableUser) obj;
+		return (name.equals(other.name)) && (age == other.age);
+		//throw new UnsupportedOperationException("to do implementation");
 	}
-
 }

@@ -15,8 +15,8 @@ public class MergeIterator implements Iterator<Integer> {
 	Iterator<Integer> one;
 	Iterator<Integer> two;
 
-	private Integer oneElemWaited;
-	private Integer twoElemWaited;
+	private Integer oneWaitedElem;
+	private Integer twoWaitedElem;
 
 	public MergeIterator(Iterable<Integer> one, Iterable<Integer> two) {
 		this.one = one.iterator();
@@ -26,7 +26,7 @@ public class MergeIterator implements Iterator<Integer> {
 	@Override
 	public boolean hasNext() {
         // TODO реализовать метод
-		return one.hasNext() || two.hasNext() || (oneElemWaited != null) || (twoElemWaited != null);
+		return one.hasNext() || two.hasNext() || (oneWaitedElem != null) || (twoWaitedElem != null);
 
 		//throw new UnsupportedOperationException("to do implementation");
 	}
@@ -36,29 +36,26 @@ public class MergeIterator implements Iterator<Integer> {
         // TODO реализовать метод
 		Integer oneElem = null;
 		Integer twoElem = null;
-		Integer oElem = null;
-
-		if (oneElemWaited != null)
-			oneElem = oneElemWaited;
+		if (oneWaitedElem != null)
+			oneElem = oneWaitedElem;
 		else if (one.hasNext())
 			oneElem = one.next();
-		if (twoElemWaited != null)
-			twoElem = twoElemWaited;
+		if (twoWaitedElem != null)
+			twoElem = twoWaitedElem;
 		else if (two.hasNext())
-			twoElem = one.next();
+			twoElem = two.next();
 		if ((oneElem == null) && (twoElem == null))
 			throw new NoSuchElementException();
-		if (oneElem < twoElem) {
-			twoElemWaited = twoElem;
-			oneElemWaited = null;
+		else if ((oneElem != null) && ((twoElem == null) || (twoElem >= oneElem))){
+			twoWaitedElem = twoElem;
+			oneWaitedElem = null;
 			return oneElem;
 		}
 		else {
-			oneElemWaited = oneElem;
-			twoElemWaited = null;
+			oneWaitedElem = oneElem;
+			twoWaitedElem = null;
 			return twoElem;
 		}
-
 		//throw new UnsupportedOperationException("to do implementation");
 	}
 
