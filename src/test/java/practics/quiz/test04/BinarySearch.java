@@ -17,39 +17,40 @@ public class BinarySearch {
 
     int[] arr = {10,20,30,40,50,60,70};
 
-    @Test
-    public void testSearchConstrainElement10() {
-         assertEquals(binarySearch(arr, 10), 0);
-    }
-
     private int binarySearch(int[] arr, int i) {
         // TODO реализовать метод
-        Boolean found = false;
-        int left = 0;
+        if (arr.length == 0)
+            return 0;
+        if (i < arr[0])
+            return 0;
         int rigth = arr.length - 1;
-        int middle = (rigth - left) / 2;
-        while (!found) {
-            if (arr[middle] == i)
+        if (i > arr[rigth])
+            return -rigth;
+        int left = 0;
+        int middle = (rigth + left) / 2;
+        Boolean found = false;
+        while (!found && (rigth - left > 1)) {
+            if (i == arr[middle])
                 found = true;
-            else if (i < arr[middle])
-                rigth = middle;
-            else
-                left = middle;
-        }
-
-        int pointer = arr.length - 1;
-        while ((pointer > 1) && !found) {
-            pointer = pointer / 2;
-            if (arr[pointer] == i) {
-                found = true;
+            else {
+                if (i < arr[middle])
+                    rigth = middle;
+                else if (i > arr[middle])
+                    left = middle;
+                middle = (rigth + left) / 2;
             }
         }
         if (found)
-            return pointer;
-        else
-            return -pointer;
-
+            return middle;
+        if (i == arr[rigth])
+            return -rigth;
+        return -left;
         //throw new UnsupportedOperationException("to do implementation");
+    }
+
+    @Test
+    public void testSearchConstrainElement10() {
+         assertEquals(binarySearch(arr, 10), 0);
     }
 
     @Test
