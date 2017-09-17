@@ -48,8 +48,33 @@ public class Address implements Comparable<Address>{
 	@Override
 	public int compareTo(Address o) {
         // TODO реализовать метод
-        //if (toString() > o.toString())
+		if (((state == null) && (o.state == null)) || ((state != null) && (state.equals(o.state)))) {
+			if (((city == null) && (o.city == null)) || ((city != null) && (city.equals(o.city)))) {
+				if (((street == null) && (o.street == null)) || ((street != null) && (street.equals(o.street)))) {
+					return ((Integer)houseNumber).compareTo(o.houseNumber);
+				}
+				else if (street == null)
+					return -1;
+				else if (o.street== null)
+					return 1;
 
-		throw new UnsupportedOperationException("to do implementation");
+				else
+					return street.compareTo(o.street);
+			}
+			else if (city == null)
+				return -1;
+			else if (o.city == null)
+				return 1;
+
+			else
+				return city.compareTo(o.city);
+		}
+		else if (state == null)
+			return -1;
+		else if (o.state == null)
+			return 1;
+		else
+			return state.compareTo(o.state);
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 }

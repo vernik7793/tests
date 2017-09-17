@@ -156,4 +156,11 @@ public class AddressTest {
 		Address address2 = new Address(State.CA, "New York", "17 Avenu", 1);
 		assertTrue(address1.compareTo(address2) > 0);
 	}
+
+	@Test
+	public void testComprareHouseNumberMore1() {
+		Address address1 = new Address(State.CA, new String("New York"), "17 Avenu", 5);
+		Address address2 = new Address(State.CA, new String("New York"), "17 Avenu", 1);
+		assertTrue(address1.compareTo(address2) > 0);
+	}
 }

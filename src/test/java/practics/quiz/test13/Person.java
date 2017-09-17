@@ -1,6 +1,8 @@
 package practics.quiz.test13;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * Считать, что порядок адресов в массиве - важен.
@@ -26,16 +28,38 @@ public class Person implements Comparable<Person> {
 	private String name;
 	private Address[] addresses;
 
+	private int CompareArraysOfAddress(Address[] addrs1, Address[] addrs2) {
+		int len1 = addrs1.length;
+		int len2 = addrs2.length;
+		int len = Math.min(len1, len2);
+		boolean compared = false;
+		int rslt = 0;
+		int i = 0;
+		while ((i < len) && !compared) {
+			rslt = addrs1[i].compareTo(addrs2[i]);
+			if (Math.abs(rslt) > 0)
+				compared = true;
+			i++;
+		}
+		if (!compared)
+			return ((Integer)len1).compareTo(len2);
+		else
+			return rslt;
+	}
+
 	public Person(int age, String name, Address[] addresses) {
 		this.age = age;
 		this.name = name;
 		this.addresses = addresses;
 	}
+
+
 	
 	@Override
 	public String toString() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		return "Person[age=" + age + ", name='" + name + "', addresses=" + Arrays.toString(addresses) + "]";
+        //throw new UnsupportedOperationException("to do implementation");
 	}
 	
 	/*
@@ -45,13 +69,26 @@ public class Person implements Comparable<Person> {
 	@Override
 	public int compareTo(Person o) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		if (age == o.age) {
+			if (((name == null) && (o.name == null)) || ((name != null) && (name.equals(o.name)))) {
+				return CompareArraysOfAddress(addresses, o.addresses);
+			}
+			else if (name == null)
+				return -1;
+			else if (o.name == null)
+				return 1;
+			else
+				return name.compareTo(o.name);
+		} else
+			return ((Integer)age).compareTo(o.age);
+        //throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public int hashCode() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        return 7 * (new Integer(age)).hashCode() + 11 * name.hashCode() + 13 * Arrays.toString(addresses).hashCode();
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	/* 
@@ -61,6 +98,14 @@ public class Person implements Comparable<Person> {
 	@Override
 	public boolean equals(Object obj) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		if (obj == null)
+			return false;
+		if (this == obj)
+			return true;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		return (age == other.age) && name.equals(other.name) && (CompareArraysOfAddress(addresses, other.addresses) == 0);
+        //throw new UnsupportedOperationException("to do implementation");
 	}
 }
