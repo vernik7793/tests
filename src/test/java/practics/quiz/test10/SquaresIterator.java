@@ -1,6 +1,7 @@
 package practics.quiz.test10;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Дописать SquaresIterator чтобы возвращал квадраты целых чисел
@@ -15,20 +16,28 @@ public class SquaresIterator implements Iterator<Integer> {
 	public SquaresIterator(int left, int right) {
 		this.left = left;
 		this.right = right;
+		this.current = (int)Math.ceil(Math.sqrt(left)) - 1;
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        //throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public boolean hasNext() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        if ((int)Math.pow(current+1 , 2) < right)
+        	return true;
+        return false;
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public Integer next() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		int sqr = (int)Math.pow(++current , 2);
+		if (sqr < right)
+			return sqr;
+		throw new NoSuchElementException();
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override

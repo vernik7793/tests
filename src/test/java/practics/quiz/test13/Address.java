@@ -16,24 +16,40 @@ public class Address implements Comparable<Address>{
 	@Override
 	public boolean equals(Object obj) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		if (obj == null)
+			return false;
+		if (this == obj)
+			return true;
+		if (getClass() != obj.getClass())
+			return false;
+		Address other = (Address) obj;
+		return (state.equals(other.state)) &&
+				(city.equals(other.city)) &&
+				(street.equals(other.street)) &&
+				(houseNumber == other.houseNumber);
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 	
 	@Override
 	public int hashCode() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        return 7 * state.hashCode() + 11 * city.hashCode() + 13 * street.hashCode() + 17 * (new Integer(houseNumber)).hashCode();
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 	
 	@Override
 	public String toString() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		return "Address[state=" + state + ", city='" + city + "', street='" + street + "', houseNumber=" + houseNumber + "]";
+
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public int compareTo(Address o) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        //if (toString() > o.toString())
+
+		throw new UnsupportedOperationException("to do implementation");
 	}
 }
