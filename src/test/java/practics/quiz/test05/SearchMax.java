@@ -13,7 +13,16 @@ public class SearchMax {
 
     public int max(int[] arr) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        int arrLen = arr.length;
+        if (arrLen == 0)
+            throw new IllegalArgumentException();
+        int max = arr[0];
+        for (int i = 1; i < arrLen; i++) {
+            if (arr[i] > max)
+                max = arr[i];
+        }
+        return max;
+        //throw new UnsupportedOperationException("to do implementation");
     }
 
     @Test

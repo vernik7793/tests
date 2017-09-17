@@ -17,7 +17,12 @@ public class ArrayEquals {
 
     public boolean arrayEquals(int[] arr1, int[] arr2) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        if (arr1 == arr2)
+            return true;
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+        return Arrays.equals(arr1,arr2);
+        //throw new UnsupportedOperationException("to do implementation");
     }
 
     @Test
