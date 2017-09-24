@@ -1,5 +1,8 @@
 package practics.quiz.test17;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static java.lang.Math.abs;
 
 /**
@@ -64,19 +67,50 @@ public class XHashMap<K, V> implements XMap<K, V> {
 	@Override
 	public V get(K key) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		int busketIndex = abs(key.hashCode()) % table.length;
+		Entry<K, V> entry = table[busketIndex];
+		while (entry != null) {
+			if (entry.key == key)
+				return entry.value;
+			entry = entry.next;
+		}
+		return null;
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public boolean containsKey(K key) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		int busketIndex = abs(key.hashCode()) % table.length;
+		Entry<K, V> entry = table[busketIndex];
+		while (entry != null) {
+			if (entry.key == key)
+				return true;
+			entry = entry.next;
+		}
+		return false;
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public void remove(K key) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
-	}
+		int busketIndex = abs(key.hashCode()) % table.length;
+		Entry<K, V> current = table[busketIndex];
+		if (current != null) {
+			if (current.key == key)
+				table[busketIndex] = current.next;
+			else {
+				Entry<K, V> prev = null;
+				while (current != null && current.key != key) {
+					prev = current;
+					current = current.next;
+				}
+				if (current != null)
+					prev.next = current.next;
+			}
 
+		}
+		//throw new UnsupportedOperationException("to do implementation");
+	}
 }

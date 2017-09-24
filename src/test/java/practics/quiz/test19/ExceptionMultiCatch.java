@@ -2,6 +2,8 @@ package practics.quiz.test19;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -80,14 +82,14 @@ public class ExceptionMultiCatch {
     @Test
     public void f2() {
         foo2();
-        assertEquals("013491011", s);
+        assertEquals("01291011", s);
     }
 
     private void foo3() {
         s+="0";
         try {
             s+="1";
-            if (true) {/*...*/}
+            if (true) {throw new Error();}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
@@ -103,7 +105,7 @@ public class ExceptionMultiCatch {
             s+="8";
         } finally {
             s+="9";
-            if (true) {/**/}
+            if (true) {throw new NullPointerException();}
             s+="10";
         }
         s+="11";
@@ -115,7 +117,7 @@ public class ExceptionMultiCatch {
             foo3();
             fail();
         } catch (NullPointerException e) {
-            assertEquals("013910", s);
+            assertEquals("019", s);
         }
     }
 
@@ -123,7 +125,7 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {/*...*/}
+            if (true) {throw new IOException();}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
@@ -135,7 +137,7 @@ public class ExceptionMultiCatch {
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {/**/}
+            if (true) {throw new NullPointerException();}
             s+="8";
         } finally {
             s+="9";
@@ -151,7 +153,7 @@ public class ExceptionMultiCatch {
             foo4();
             fail();
         } catch (NullPointerException e) {
-            assertEquals("0139", s);
+            assertEquals("017910", s);
         }
     }
 
@@ -159,7 +161,7 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {/*...*/}
+            if (true) {throw new RuntimeException();}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
@@ -191,7 +193,7 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {/*...*/}
+            if (true) {throw new RuntimeException();}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
@@ -199,7 +201,7 @@ public class ExceptionMultiCatch {
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {/**/}
+            if (true) {throw new NullPointerException();}
             s+="6";
         } catch (Exception e) {
             s+="7";
@@ -219,7 +221,7 @@ public class ExceptionMultiCatch {
             foo6();
             fail();
         } catch (NullPointerException e) {
-            assertEquals("01569", s);
+            assertEquals("015910", s);
         }
     }
 
@@ -227,11 +229,11 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {/*...*/}
+            if (true) {throw new NullPointerException();}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {/**/}
+            if (true) {throw new NullPointerException();}
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
@@ -243,7 +245,7 @@ public class ExceptionMultiCatch {
             s+="8";
         } finally {
             s+="9";
-            if (true) {/*...*/}
+            if (true) {throw new NullPointerException();}
             s+="10";
         }
         s+="11";
@@ -255,7 +257,7 @@ public class ExceptionMultiCatch {
             foo7();
             fail();
         } catch (NullPointerException e) {
-            assertEquals("0159", s);
+            assertEquals("0139", s);
         }
     }
 
@@ -263,7 +265,7 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {/*...*/}
+            if (true) {throw new IOException();}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
@@ -275,11 +277,11 @@ public class ExceptionMultiCatch {
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {/**/}
+            if (true) {throw new Error();}
             s+="8";
         } finally {
             s+="9";
-            if (true) {/**/}
+            if (true) {throw new NullPointerException();}
             s+="10";
         }
         s+="11";
@@ -290,8 +292,8 @@ public class ExceptionMultiCatch {
         try {
             foo8();
             fail();
-        } catch (RuntimeException e) {
-            assertEquals("015910", s);
+        } catch (NullPointerException e) {
+            assertEquals("0179", s);
         }
     }
 
@@ -299,7 +301,7 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {/*...*/}
+            if (true) {throw new IOException();}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
@@ -307,11 +309,11 @@ public class ExceptionMultiCatch {
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {/**/}
+            if (true) {/*...*/}
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {/**/}
+            if (true) {throw new IOException();}
             s+="8";
         } finally {
             s+="9";
@@ -327,7 +329,7 @@ public class ExceptionMultiCatch {
             foo9();
             fail();
         } catch (Exception e) {
-            assertEquals("01789", s);
+            assertEquals("017910", s);
         }
     }
 
@@ -335,15 +337,15 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {/*...*/}
+            if (true) {throw new NullPointerException();}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {/**/}
+            if (true) {throw new RuntimeException();}
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {/**/}
+            if (true) {throw new RuntimeException();}
             s+="6";
         } catch (Exception e) {
             s+="7";
@@ -359,8 +361,12 @@ public class ExceptionMultiCatch {
 
     @Test
     public void f10() {
-        foo10();
-        assertEquals("017891011", s);
+        try {
+            foo10();
+            fail();
+        } catch (Exception e) {
+            assertEquals("013910", s);
+        }
     }
 
 }

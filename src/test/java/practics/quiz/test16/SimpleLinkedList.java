@@ -1,6 +1,8 @@
 package practics.quiz.test16;
 
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 /**
  * 
@@ -55,21 +57,26 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
 			@Override
 			public boolean hasNext() {
                 // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+                return current.next != null;
+				//throw new UnsupportedOperationException("to do implementation");
 			}
 
 			@Override
 			public E next() {
                 // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+                if (current.next == null)
+                	throw new NoSuchElementException();
+                current = current.next;
+                return current.item;
+				//throw new UnsupportedOperationException("to do implementation");
 			}
 
 			@Override
 			public void remove() {
                 // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+				unlink(current);
+				//throw new UnsupportedOperationException("to do implementation");
 			}
-
 		};
 	}
 
@@ -98,7 +105,23 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
 	// *** *** *** REMOVE *** *** ***
 	public boolean remove(Object o) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		if (o == null) {
+			for (Node<E> x = first; x != null; x = x.next) {
+				if (x.item == null) {
+					unlink(x);
+					return true;
+				}
+			}
+		} else {
+			for (Node<E> x = first; x != null; x = x.next) {
+				if (o.equals(x.item)) {
+					unlink(x);
+					return true;
+				}
+			}
+		}
+		return false;
+        //throw new UnsupportedOperationException("to do implementation");
 	}
 
 	public E remove(int index) {
@@ -110,19 +133,54 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
 	@Override
 	public boolean equals(Object o) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		if (o == this)
+			return true;
+		if (!(o instanceof SimpleLinkedList))
+			return false;
+
+		Iterator<E> e1 = iterator();
+		Iterator<?> e2 = ((SimpleLinkedList<?>) o).iterator();
+		while (e1.hasNext() && e2.hasNext()) {
+			E o1 = e1.next();
+			Object o2 = e2.next();
+			if (!(o1==null ? o2==null : o1.equals(o2)))
+				return false;
+		}
+		return !(e1.hasNext() || e2.hasNext());
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public int hashCode() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		int hashCode = 1;
+		//for (E e : this)
+		Iterator<E> iter = iterator();
+		while(iter.hasNext()) {
+			E e = iter.next();
+			hashCode = 31 * hashCode + (e == null ? 0 : e.hashCode());
+		}
+		return hashCode;
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public String toString() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		Iterator<E> it = iterator();
+		if (! it.hasNext())
+			return "[]";
+
+		StringBuilder sb = new StringBuilder();
+		sb.append('[');
+		for (;;) {
+			E e = it.next();
+			sb.append(e == this ? "(this Collection)" : e);
+			if (! it.hasNext())
+				return sb.append(']').toString();
+			sb.append(',');
+		}
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	// ---------- internals ----------
@@ -150,7 +208,22 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
 
 	private int indexOf(Object o) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		int index = 0;
+		if (o == null) {
+			for (Node<E> x = first; x != null; x = x.next) {
+				if (x.item == null)
+					return index;
+				index++;
+			}
+		} else {
+			for (Node<E> x = first; x != null; x = x.next) {
+				if (o.equals(x.item))
+					return index;
+				index++;
+			}
+		}
+		return -1;
+        //throw new UnsupportedOperationException("to do implementation");
 	}
 
 	private E unlink(Node<E> x) { // todo:

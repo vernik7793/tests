@@ -1,6 +1,9 @@
 package practics.quiz.test15;
 
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static java.lang.Math.max;
 
@@ -57,23 +60,53 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	public Iterator<E> iterator() {
 		return new Iterator<E>() {
 			private int current = 0;
+			int lastRet = -1;
+			int expectedModCount = modCount;
 
 			@Override
 			public boolean hasNext() {
                 // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+				return current != size;
+                //throw new UnsupportedOperationException("to do implementation");
 			}
 
 			@Override
+			@SuppressWarnings("unchecked")
 			public E next() {
                 // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+				checkForComodification();
+				int i = current;
+				if (i >= size)
+					throw new NoSuchElementException();
+				Object[] elementData = SimpleArrayList.this.data;
+				if (i >= elementData.length)
+					throw new ConcurrentModificationException();
+				current = i + 1;
+				return (E) elementData[lastRet = i];
+                //throw new UnsupportedOperationException("to do implementation");
 			}
 
 			@Override
 			public void remove() {
                 // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+				if (lastRet < 0)
+					throw new IllegalStateException();
+				checkForComodification();
+
+				try {
+					SimpleArrayList.this.remove(lastRet);
+					current = lastRet;
+					lastRet = -1;
+					expectedModCount = modCount;
+				} catch (IndexOutOfBoundsException ex) {
+					throw new ConcurrentModificationException();
+				}
+				//throw new UnsupportedOperationException("to do implementation");
+			}
+
+			final void checkForComodification() {
+				if (modCount != expectedModCount)
+					throw new ConcurrentModificationException();
 			}
 		};
 	}
@@ -82,7 +115,19 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	@Override
 	public boolean contains(Object element) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		//return indexOf(o) >= 0;
+		if (element == null) {
+			for (int i = 0; i < size; i++)
+				if (data[i]==null)
+					return true;
+		} else {
+			for (int i = 0; i < size; i++)
+				if (element.equals(data[i]))
+					return true;
+		}
+		return false;
+
+        //throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
@@ -108,7 +153,21 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	@Override
 	public boolean remove(Object element) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		if (element == null) {
+			for (int index = 0; index < size; index++)
+				if (data[index] == null) {
+					remove(index);
+					return true;
+				}
+		} else {
+			for (int index = 0; index < size; index++)
+				if (element.equals(data[index])) {
+					remove(index);
+					return true;
+				}
+		}
+		return false;
+        //throw new UnsupportedOperationException("to do implementation");
 	}
 
 	private void shift(int index) {
@@ -129,19 +188,50 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	@Override
 	public boolean equals(Object o) {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		if (o == this)
+			return true;
+		if (!(o instanceof SimpleArrayList))
+			return false;
+
+		Iterator<E> e1 = iterator();
+		Iterator<?> e2 = ((SimpleArrayList<?>) o).iterator();
+		while (e1.hasNext() && e2.hasNext()) {
+			E o1 = e1.next();
+			Object o2 = e2.next();
+			if (!(o1==null ? o2==null : o1.equals(o2)))
+				return false;
+		}
+		return !(e1.hasNext() || e2.hasNext());
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public int hashCode() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		int hashCode = 1;
+		for (int i = 0; i < size; i++)
+			hashCode = 31*hashCode + (data[i]==null ? 0 : data[i].hashCode());
+		return hashCode;
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 
 	@Override
 	public String toString() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		Iterator<E> it = iterator();
+		if (! it.hasNext())
+			return "[]";
+
+		StringBuilder sb = new StringBuilder();
+		sb.append('[');
+		for (;;) {
+			E e = it.next();
+			sb.append(e == this ? "(this Collection)" : e);
+			if (! it.hasNext())
+				return sb.append(']').toString();
+			sb.append(',');
+		}
+        //throw new UnsupportedOperationException("to do implementation");
 	}
 
 	// ---------- internals ----------
@@ -159,4 +249,11 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 			this.data = newData;
 		}
 	}
+
+	protected transient int modCount = 0;
+
+	/*ArrayList a = new ArrayList();
+	void aa(){
+		a.contains();
+	}*/
 }

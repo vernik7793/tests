@@ -159,7 +159,8 @@ public class SimpleArrayListTest {
 		list.add(3);
 		Iterator<Integer> iter = list.iterator();
 
-		iter.remove();
+		//iter.remove();// нет предшествующего вызова next() !
+		iter.next();
 
 		assertTrue(iter.hasNext());
 		assertTrue(iter.hasNext());
