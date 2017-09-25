@@ -13,7 +13,12 @@ public class NodeException extends InterruptedException {
 
 	public void inc() throws NodeException {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        count++;
+        if (count > 99) {
+			count = 0;
+        	throw new NodeException();
+		}
+		//throw new UnsupportedOperationException("to do implementation");
 	}
 	
 	public void reset() {
